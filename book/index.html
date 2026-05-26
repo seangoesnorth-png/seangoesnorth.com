@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Call — Sean Goes North</title>
+  <meta name="description" content="15 minutes. Free. Talk AI, content, websites — whatever's in your way.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0E12;
+      --surface: #141A20;
+      --border: #1F2832;
+      --text-primary: #E8EEF2;
+      --text-secondary: #8A95A0;
+      --text-mono: #5A6772;
+      --accent-yellow: #F5D547;
+      --accent-red: #E04545;
+      --accent-cyan: #4FB8D9;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Dot grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; width: 100%; max-width: 540px; padding: 0 24px; }
+
+    /* Top metadata bar */
+    .meta-bar {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 20px 0 0;
+      line-height: 1.6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .meta-bar .home-link {
+      color: var(--text-mono);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .meta-bar .home-link:hover { color: var(--accent-yellow); }
+
+    .meta-bar .active { color: var(--accent-cyan); }
+
+    .meta-bar .active::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Hero */
+    .hero { text-align: center; padding: 48px 0 24px; }
+
+    .hero .fig {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--accent-yellow); }
+
+    .hero .thesis {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-top: 16px;
+      line-height: 1.4;
+    }
+
+    .asterisk {
+      display: inline-block;
+      color: var(--accent-red);
+      font-size: 14px;
+      margin: 24px 0 0;
+    }
+
+    .coords {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* Section divider w/ label */
+    .section {
+      padding: 32px 0;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-bottom: 16px;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 24px;
+    }
+
+    /* What you get / What I do */
+    .info-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 24px 24px 20px;
+      margin-bottom: 16px;
+    }
+
+    .info-block h3 {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+    }
+
+    .info-block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-block li {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .info-block li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-yellow);
+      font-family: var(--font-mono);
+    }
+
+    .info-block li em {
+      font-style: italic;
+      color: var(--accent-yellow);
+    }
+
+    .info-block p {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .info-block p em {
+      font-style: italic;
+      color: var(--accent-yellow);
+    }
+
+    /* Calendly container — themed to Iron HUD */
+    .calendly-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 4px;
+      min-height: 680px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calendly-wrap::before {
+      content: '// SCHEDULER';
+      position: absolute;
+      top: -7px;
+      left: 16px;
+      background: var(--bg);
+      padding: 0 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      z-index: 2;
+    }
+
+    .calendly-inline-widget {
+      min-width: 280px;
+      height: 680px;
+      width: 100%;
+    }
+
+    /* Fallback CTA if calendly fails to load */
+    .calendly-fallback {
+      padding: 32px 24px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-mono);
+      letter-spacing: 0.08em;
+    }
+
+    .calendly-fallback a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+    }
+
+    /* Footer */
+    .footer {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 16px 0 32px;
+    }
+
+    /* Corner crosshair decorations */
+    .crosshair {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .crosshair::before, .crosshair::after {
+      content: '';
+      position: absolute;
+      background: var(--border);
+    }
+
+    .crosshair::before { width: 1px; height: 100%; left: 50%; }
+    .crosshair::after { height: 1px; width: 100%; top: 50%; }
+
+    .crosshair.tl { top: 24px; left: 24px; }
+    .crosshair.tr { top: 24px; right: 24px; }
+    .crosshair.bl { bottom: 24px; left: 24px; }
+    .crosshair.br { bottom: 24px; right: 24px; }
+
+    /* Custom cursor reticle */
+    .cursor-reticle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease;
+      opacity: 0;
+    }
+
+    .cursor-reticle.active { opacity: 1; }
+
+    .cursor-reticle::before,
+    .cursor-reticle::after {
+      content: '';
+      position: absolute;
+      background: var(--accent-cyan);
+    }
+
+    .cursor-reticle::before { width: 1px; height: 28px; left: 50%; transform: translateX(-50%); }
+    .cursor-reticle::after { height: 1px; width: 28px; top: 50%; transform: translateY(-50%); }
+
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-yellow);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease;
+      opacity: 0;
+    }
+
+    .cursor-dot.active { opacity: 1; }
+
+    @media (hover: none), (max-width: 520px) {
+      body { cursor: auto; }
+      .cursor-reticle, .cursor-dot { display: none; }
+      .hero h1 { font-size: 36px; }
+      .crosshair { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="crosshair tl"></div>
+  <div class="crosshair tr"></div>
+  <div class="crosshair bl"></div>
+  <div class="crosshair br"></div>
+
+  <div class="cursor-reticle" id="reticle"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <div class="page">
+
+    <div class="meta-bar">
+      <a href="/" class="home-link">&larr; seangoesnorth</a>
+      <span><span class="active">Active</span> &middot; Sean Sullivan</span>
+    </div>
+
+    <div class="hero">
+      <div class="fig">// Fig IX / Field Note / 05.27.26</div>
+      <h1>Book a <em>Call</em></h1>
+      <p class="thesis">15 minutes. Free. Whatever's in your way.</p>
+      <div class="asterisk">&#x2731;</div>
+      <div class="coords">Tue / Wed / Thu &middot; 5–7 PM ET</div>
+    </div>
+
+    <div class="section">
+
+      <div class="section-label">// Who this is for</div>
+      <div class="info-block">
+        <p>If you're a contractor, an electrician, a plumber, a roofer, a small business owner — or anyone who's been putting off the <em>website</em>, the <em>AI tools</em>, or the <em>content</em> you know you need — book a slot.</p>
+        <p>No deck. No pitch. We just talk.</p>
+      </div>
+
+      <div class="section-label" style="margin-top:24px;">// What you get</div>
+      <div class="info-block">
+        <ul>
+          <li>15 minutes with a <em>20-year creative director</em> who's worked with Nike, Apple, Jordan, Disney, Amazon</li>
+          <li>Direct answers on AI tools, websites, content — whatever you're stuck on</li>
+          <li>A clear next step. Or honest "this isn't worth your money."</li>
+        </ul>
+      </div>
+
+      <div class="section-label" style="margin-top:24px;">// What this isn't</div>
+      <div class="info-block">
+        <ul>
+          <li>Not a sales call</li>
+          <li>Not a free consult I'll upsell you on</li>
+          <li>Not 60 minutes of small talk &mdash; 15 minutes, in and out</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="section">
+      <div class="section-label">// Pick a time</div>
+      <div class="section-divider"></div>
+
+      <div class="calendly-wrap">
+        <!-- Calendly inline widget begin -->
+        <div class="calendly-inline-widget"
+             data-url="https://calendly.com/seangoesnorth/15min?background_color=0a0e12&text_color=e8eef2&primary_color=f5d547&hide_event_type_details=1&hide_gdpr_banner=1"
+             id="calendly-embed"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <noscript>
+          <div class="calendly-fallback">
+            JavaScript required to view scheduler.<br>
+            DM <a href="https://instagram.com/seangoesnorth">@seangoesnorth</a> on Instagram instead.
+          </div>
+        </noscript>
+        <!-- Calendly inline widget end -->
+      </div>
+    </div>
+
+    <div class="footer">
+      Est. 2026 &middot; Body &middot; Mind &middot; Craft
+    </div>
+
+  </div>
+
+  <script>
+    // Cursor reticle (mirrors home page)
+    (function () {
+      var reticle = document.getElementById('reticle');
+      var dot = document.getElementById('cursorDot');
+      var rX = 0, rY = 0, mX = 0, mY = 0;
+      var hasMoved = false;
+
+      document.addEventListener('mousemove', function (e) {
+        mX = e.clientX;
+        mY = e.clientY;
+        if (!hasMoved) {
+          hasMoved = true;
+          reticle.classList.add('active');
+          dot.classList.add('active');
+        }
+      });
+
+      document.addEventListener('mouseleave', function () {
+        reticle.classList.remove('active');
+        dot.classList.remove('active');
+      });
+
+      function tick() {
+        rX += (mX - rX) * 0.18;
+        rY += (mY - rY) * 0.18;
+        reticle.style.transform = 'translate(' + rX + 'px, ' + rY + 'px) translate(-50%, -50%)';
+        dot.style.transform = 'translate(' + mX + 'px, ' + mY + 'px) translate(-50%, -50%)';
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+  </script>
+
+</body>
+</html>
