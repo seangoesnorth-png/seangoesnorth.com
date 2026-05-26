@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sean Goes North</title>
+  <meta name="description" content="I use AI to rebuild every part of my life — in public.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0E12;
+      --surface: #141A20;
+      --border: #1F2832;
+      --text-primary: #E8EEF2;
+      --text-secondary: #8A95A0;
+      --text-mono: #5A6772;
+      --accent-yellow: #F5D547;
+      --accent-red: #E04545;
+      --accent-cyan: #4FB8D9;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Dot grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; width: 100%; max-width: 480px; padding: 0 24px; }
+
+    /* Top metadata bar */
+    .meta-bar {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 20px 0 0;
+      line-height: 1.6;
+    }
+
+    .meta-bar .active {
+      color: var(--accent-cyan);
+    }
+
+    .meta-bar .active::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 0 32px;
+    }
+
+    .hero .fig {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 42px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent-yellow);
+    }
+
+    .hero .thesis {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-top: 16px;
+      line-height: 1.4;
+    }
+
+    /* Asterisk mark */
+    .asterisk {
+      display: inline-block;
+      color: var(--accent-red);
+      font-size: 14px;
+      margin: 24px 0 0;
+    }
+
+    /* Coordinate metadata */
+    .coords {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* Links section */
+    .links {
+      padding: 16px 0 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .links .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-top: 12px;
+      margin-bottom: -4px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+      position: relative;
+    }
+
+    .link-card:hover {
+      border-color: var(--accent-yellow);
+      background: rgba(245, 213, 71, 0.03);
+    }
+
+    .link-card .label {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .link-card .sublabel {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--text-mono);
+      margin-top: 2px;
+    }
+
+    .link-card .arrow {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-mono);
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+
+    .link-card:hover .arrow {
+      color: var(--accent-yellow);
+      transform: translateX(2px);
+    }
+
+    /* CTA card — yellow accent */
+    .link-card.cta {
+      border-color: var(--accent-yellow);
+      background: rgba(245, 213, 71, 0.04);
+    }
+
+    .link-card.cta .label {
+      color: var(--accent-yellow);
+    }
+
+    .link-card.cta:hover {
+      background: rgba(245, 213, 71, 0.08);
+    }
+
+    /* Divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0;
+    }
+
+    /* Footer */
+    .footer {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 0 0 32px;
+    }
+
+    /* Crosshair decorations */
+    .crosshair {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .crosshair::before, .crosshair::after {
+      content: '';
+      position: absolute;
+      background: var(--border);
+    }
+
+    .crosshair::before {
+      width: 1px;
+      height: 100%;
+      left: 50%;
+    }
+
+    .crosshair::after {
+      height: 1px;
+      width: 100%;
+      top: 50%;
+    }
+
+    .crosshair.tl { top: 24px; left: 24px; }
+    .crosshair.tr { top: 24px; right: 24px; }
+    .crosshair.bl { bottom: 24px; left: 24px; }
+    .crosshair.br { bottom: 24px; right: 24px; }
+
+    @media (max-width: 520px) {
+      .hero h1 { font-size: 36px; }
+      .crosshair { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="crosshair tl"></div>
+  <div class="crosshair tr"></div>
+  <div class="crosshair bl"></div>
+  <div class="crosshair br"></div>
+
+  <div class="page">
+
+    <div class="meta-bar">
+      <span class="active">Active</span> &middot; Sean Sullivan &middot; @seangoesnorth
+    </div>
+
+    <div class="hero">
+      <div class="fig">// Fig I / Field Note / 05.26.26</div>
+      <h1>Sean Goes <em>North</em></h1>
+      <p class="thesis">I use AI to rebuild every part of my life — in public.</p>
+      <div class="asterisk">&#x2731;</div>
+      <div class="coords">Coord 41.0339&deg;N 73.7629&deg;W</div>
+    </div>
+
+    <div class="links">
+
+      <div class="section-label">// Follow</div>
+
+      <a href="https://instagram.com/seangoesnorth" target="_blank" rel="noopener" class="link-card">
+        <div>
+          <div class="label">Instagram</div>
+          <div class="sublabel">@seangoesnorth</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <a href="https://seangoesnorth.substack.com" target="_blank" rel="noopener" class="link-card">
+        <div>
+          <div class="label">Morning Practice</div>
+          <div class="sublabel">Substack &middot; weekly</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <div class="divider"></div>
+      <div class="section-label">// Build</div>
+
+      <a href="https://github.com/seangoesnorth-png/goesnorth-prompts" target="_blank" rel="noopener" class="link-card" id="prompts-link" onclick="return gatePrompts(event)">
+        <div>
+          <div class="label">The Prompts</div>
+          <div class="sublabel">30 battle-tested AI prompts &middot; password required</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <a href="https://www.seansullivancreative.com" target="_blank" rel="noopener" class="link-card">
+        <div>
+          <div class="label">Sean Sullivan Creative</div>
+          <div class="sublabel">Production &middot; Nike, Apple, Jordan, Disney</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <div class="divider"></div>
+      <div class="section-label">// Connect</div>
+
+      <a href="https://instagram.com/direct/new/?username=seangoesnorth" target="_blank" rel="noopener" class="link-card cta">
+        <div>
+          <div class="label">DM NORTH on Instagram</div>
+          <div class="sublabel">Get the Morning Prompt + the next one before it drops</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+    </div>
+
+    <div class="footer">
+      Est. 2026 &middot; Body &middot; Mind &middot; Craft
+    </div>
+
+  </div>
+
+  <script>
+    function gatePrompts(e) {
+      e.preventDefault();
+      var pw = prompt('Enter the password:');
+      if (pw === null) return false;
+      if (pw.trim().toLowerCase() === 'north') {
+        window.open('https://github.com/seangoesnorth-png/goesnorth-prompts', '_blank', 'noopener');
+      } else {
+        alert('Wrong password. DM "NORTH" on Instagram to get access.');
+      }
+      return false;
+    }
+  </script>
+
+</body>
+</html>
