@@ -35,6 +35,7 @@
       align-items: center;
       position: relative;
       overflow-x: hidden;
+      cursor: none;
     }
 
     /* Dot grid background */
@@ -62,9 +63,7 @@
       line-height: 1.6;
     }
 
-    .meta-bar .active {
-      color: var(--accent-cyan);
-    }
+    .meta-bar .active { color: var(--accent-cyan); }
 
     .meta-bar .active::before {
       content: '';
@@ -84,10 +83,7 @@
     }
 
     /* Hero */
-    .hero {
-      text-align: center;
-      padding: 48px 0 32px;
-    }
+    .hero { text-align: center; padding: 48px 0 24px; }
 
     .hero .fig {
       font-family: var(--font-mono);
@@ -106,10 +102,7 @@
       margin-bottom: 8px;
     }
 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent-yellow);
-    }
+    .hero h1 em { font-style: italic; color: var(--accent-yellow); }
 
     .hero .thesis {
       font-family: var(--font-serif);
@@ -120,7 +113,6 @@
       line-height: 1.4;
     }
 
-    /* Asterisk mark */
     .asterisk {
       display: inline-block;
       color: var(--accent-red);
@@ -128,7 +120,6 @@
       margin: 24px 0 0;
     }
 
-    /* Coordinate metadata */
     .coords {
       font-family: var(--font-mono);
       font-size: 9px;
@@ -139,9 +130,60 @@
       margin-top: 8px;
     }
 
+    /* Ticker — affirmations */
+    .ticker {
+      margin: 24px 0 8px;
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .ticker::before {
+      content: '// Ticker';
+      position: absolute;
+      top: -7px;
+      left: 12px;
+      background: var(--bg);
+      padding: 0 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+    }
+
+    .ticker-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 1.4;
+      transition: opacity 0.6s ease;
+    }
+
+    .ticker-attr {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-top: 6px;
+      transition: opacity 0.6s ease;
+    }
+
+    .ticker.fading .ticker-quote,
+    .ticker.fading .ticker-attr { opacity: 0; }
+
     /* Links section */
     .links {
-      padding: 16px 0 48px;
+      padding: 16px 0 32px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -160,7 +202,7 @@
     .link-card {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 14px;
       padding: 16px 20px;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -175,6 +217,19 @@
       border-color: var(--accent-yellow);
       background: rgba(245, 213, 71, 0.03);
     }
+
+    .link-card .icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-card .icon svg { width: 100%; height: 100%; display: block; }
+
+    .link-card .body { flex: 1; }
 
     .link-card .label {
       font-family: var(--font-serif);
@@ -195,6 +250,7 @@
       font-size: 14px;
       color: var(--text-mono);
       transition: color 0.15s ease, transform 0.15s ease;
+      flex-shrink: 0;
     }
 
     .link-card:hover .arrow {
@@ -208,12 +264,91 @@
       background: rgba(245, 213, 71, 0.04);
     }
 
-    .link-card.cta .label {
-      color: var(--accent-yellow);
+    .link-card.cta .label { color: var(--accent-yellow); }
+    .link-card.cta:hover { background: rgba(245, 213, 71, 0.08); }
+
+    /* Instagram grid */
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .link-card.cta:hover {
-      background: rgba(245, 213, 71, 0.08);
+    .ig-thumb {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--surface);
+      display: block;
+      text-decoration: none;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .ig-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s ease, transform 0.3s ease;
+    }
+
+    .ig-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,14,18,0) 50%, rgba(10,14,18,0.7) 100%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .ig-thumb:hover { border-color: var(--accent-yellow); }
+    .ig-thumb:hover img { transform: scale(1.04); }
+    .ig-thumb:hover::after { opacity: 1; }
+
+    .ig-thumb .ig-mark {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 14px;
+      height: 14px;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.6));
+      z-index: 2;
+    }
+
+    /* Coming soon cards */
+    .link-card.soon {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .link-card.soon:hover {
+      border-color: var(--border);
+      background: var(--surface);
+    }
+
+    .link-card.soon:hover .arrow {
+      color: var(--text-mono);
+      transform: none;
+    }
+
+    .link-card .badge {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      border: 1px solid var(--accent-cyan);
+      padding: 2px 6px;
+      border-radius: 1px;
+      opacity: 0.7;
     }
 
     /* Divider */
@@ -235,7 +370,7 @@
       padding: 0 0 32px;
     }
 
-    /* Crosshair decorations */
+    /* Corner crosshair decorations */
     .crosshair {
       position: fixed;
       width: 20px;
@@ -250,22 +385,72 @@
       background: var(--border);
     }
 
-    .crosshair::before {
-      width: 1px;
-      height: 100%;
-      left: 50%;
-    }
-
-    .crosshair::after {
-      height: 1px;
-      width: 100%;
-      top: 50%;
-    }
+    .crosshair::before { width: 1px; height: 100%; left: 50%; }
+    .crosshair::after { height: 1px; width: 100%; top: 50%; }
 
     .crosshair.tl { top: 24px; left: 24px; }
     .crosshair.tr { top: 24px; right: 24px; }
     .crosshair.bl { bottom: 24px; left: 24px; }
     .crosshair.br { bottom: 24px; right: 24px; }
+
+    /* Custom cursor reticle */
+    .cursor-reticle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease;
+      opacity: 0;
+    }
+
+    .cursor-reticle.active { opacity: 1; }
+
+    .cursor-reticle::before,
+    .cursor-reticle::after {
+      content: '';
+      position: absolute;
+      background: var(--accent-cyan);
+    }
+
+    .cursor-reticle::before {
+      width: 1px;
+      height: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cursor-reticle::after {
+      height: 1px;
+      width: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-yellow);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease;
+      opacity: 0;
+    }
+
+    .cursor-dot.active { opacity: 1; }
+
+    @media (hover: none), (max-width: 520px) {
+      body { cursor: auto; }
+      .cursor-reticle, .cursor-dot { display: none; }
+    }
 
     @media (max-width: 520px) {
       .hero h1 { font-size: 36px; }
@@ -279,6 +464,9 @@
   <div class="crosshair tr"></div>
   <div class="crosshair bl"></div>
   <div class="crosshair br"></div>
+
+  <div class="cursor-reticle" id="reticle"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
 
   <div class="page">
 
@@ -294,12 +482,32 @@
       <div class="coords">Coord 41.0339&deg;N 73.7629&deg;W</div>
     </div>
 
+    <div class="ticker" id="ticker">
+      <div class="ticker-quote" id="tickerQuote">Assume the feeling of the wish fulfilled.</div>
+      <div class="ticker-attr" id="tickerAttr">Neville Goddard</div>
+    </div>
+
     <div class="links">
 
       <div class="section-label">// Follow</div>
 
       <a href="https://instagram.com/seangoesnorth" target="_blank" rel="noopener" class="link-card">
-        <div>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0">
+                <stop offset="0%" stop-color="#FEDA77"/>
+                <stop offset="30%" stop-color="#F58529"/>
+                <stop offset="60%" stop-color="#DD2A7B"/>
+                <stop offset="100%" stop-color="#8134AF"/>
+              </linearGradient>
+            </defs>
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="url(#ig-grad)" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="4.2" stroke="url(#ig-grad)" stroke-width="1.6"/>
+            <circle cx="17.5" cy="6.5" r="1.1" fill="url(#ig-grad)"/>
+          </svg>
+        </span>
+        <div class="body">
           <div class="label">Instagram</div>
           <div class="sublabel">@seangoesnorth</div>
         </div>
@@ -307,7 +515,14 @@
       </a>
 
       <a href="https://seangoesnorth.substack.com" target="_blank" rel="noopener" class="link-card">
-        <div>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="5" width="16" height="2.4" fill="#FF6719"/>
+            <rect x="4" y="9.2" width="16" height="2.4" fill="#FF6719"/>
+            <path d="M4 13.4 L20 13.4 L20 21 L12 16.5 L4 21 Z" fill="#FF6719"/>
+          </svg>
+        </span>
+        <div class="body">
           <div class="label">Morning Practice</div>
           <div class="sublabel">Substack &middot; weekly</div>
         </div>
@@ -318,7 +533,12 @@
       <div class="section-label">// Build</div>
 
       <a href="https://github.com/seangoesnorth-png/goesnorth-prompts" target="_blank" rel="noopener" class="link-card" id="prompts-link" onclick="return gatePrompts(event)">
-        <div>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.58 2 12.24c0 4.53 2.87 8.36 6.84 9.72.5.09.69-.22.69-.49 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.36-3.37-1.36-.46-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.13-4.56-5.02 0-1.11.39-2.02 1.03-2.73-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.04A9.32 9.32 0 0 1 12 7.18c.85.004 1.71.12 2.51.34 1.91-1.31 2.75-1.04 2.75-1.04.55 1.4.2 2.43.1 2.69.64.71 1.03 1.62 1.03 2.73 0 3.9-2.34 4.76-4.57 5.01.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49C19.13 20.6 22 16.77 22 12.24 22 6.58 17.52 2 12 2z" fill="#8A95A0"/>
+          </svg>
+        </span>
+        <div class="body">
           <div class="label">The Prompts</div>
           <div class="sublabel">30 battle-tested AI prompts &middot; password required</div>
         </div>
@@ -326,7 +546,14 @@
       </a>
 
       <a href="https://www.seansullivancreative.com" target="_blank" rel="noopener" class="link-card">
-        <div>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="1" stroke="#8A95A0" stroke-width="1.4"/>
+            <path d="M7 16 L12 7 L17 16" stroke="#8A95A0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 13 L15 13" stroke="#8A95A0" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="body">
           <div class="label">Sean Sullivan Creative</div>
           <div class="sublabel">Production &middot; Nike, Apple, Jordan, Disney</div>
         </div>
@@ -337,12 +564,75 @@
       <div class="section-label">// Connect</div>
 
       <a href="https://instagram.com/direct/new/?username=seangoesnorth" target="_blank" rel="noopener" class="link-card cta">
-        <div>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5h18v12H7l-4 4z" stroke="#F5D547" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="body">
           <div class="label">DM NORTH on Instagram</div>
           <div class="sublabel">Get the Morning Prompt + the next one before it drops</div>
         </div>
         <span class="arrow">&rarr;</span>
       </a>
+
+      <div class="divider"></div>
+      <div class="section-label">// Recent Work</div>
+
+      <div class="ig-grid">
+        <a href="https://www.instagram.com/p/DXIw1lCDDvK/" target="_blank" rel="noopener" class="ig-thumb" aria-label="You Ain't Done Yet — Hi I'm Sean">
+          <img src="assets/img/instagram/01-DXIw1lCDDvK.jpg" alt="You Ain't Done Yet — Hi I'm Sean" loading="lazy">
+        </a>
+        <a href="https://www.instagram.com/p/DWk7-VOjdv8/" target="_blank" rel="noopener" class="ig-thumb" aria-label="Worth Fighting For">
+          <img src="assets/img/instagram/02-DWk7-VOjdv8.jpg" alt="Worth Fighting For" loading="lazy">
+        </a>
+        <a href="https://www.instagram.com/p/DYvAhPHvjTx/" target="_blank" rel="noopener" class="ig-thumb" aria-label="Serendipitous Sunday">
+          <img src="assets/img/instagram/03-DYvAhPHvjTx.jpg" alt="Serendipitous Sunday" loading="lazy">
+        </a>
+        <a href="https://www.instagram.com/p/DX5YQUMsEBi/" target="_blank" rel="noopener" class="ig-thumb" aria-label="I Did It For Love">
+          <img src="assets/img/instagram/04-DX5YQUMsEBi.jpg" alt="I Did It For Love" loading="lazy">
+        </a>
+        <a href="https://www.instagram.com/p/DXEsl5KDdqK/" target="_blank" rel="noopener" class="ig-thumb" aria-label="The next 6 months are already ours">
+          <img src="assets/img/instagram/05-DXEsl5KDdqK.jpg" alt="The next 6 months are already ours" loading="lazy">
+        </a>
+        <a href="https://www.instagram.com/p/DX38UoAyna7/" target="_blank" rel="noopener" class="ig-thumb" aria-label="I quit drinking — what I got was a new life">
+          <img src="assets/img/instagram/06-DX38UoAyna7.jpg" alt="I quit drinking — what I got was a new life" loading="lazy">
+        </a>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">// Coming Soon</div>
+
+      <div class="link-card soon" aria-disabled="true">
+        <span class="badge">Q3 2026</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="9" stroke="#8A95A0" stroke-width="1.4"/>
+            <path d="M12 3 L12 21" stroke="#8A95A0" stroke-width="1.4" stroke-dasharray="2 2"/>
+            <path d="M12 7 L14 12 L12 17 L10 12 Z" fill="#F5D547"/>
+          </svg>
+        </span>
+        <div class="body">
+          <div class="label">North</div>
+          <div class="sublabel">A daily-practice companion tool</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </div>
+
+      <div class="link-card soon" aria-disabled="true">
+        <span class="badge">Q3 2026</span>
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 4 L5 20 L19 20 L19 8 L15 4 Z" stroke="#8A95A0" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M8 12 L16 12 M8 16 L13 16" stroke="#8A95A0" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="body">
+          <div class="label">A Life for Creatives</div>
+          <div class="sublabel">A studio tool for working artists</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </div>
 
     </div>
 
@@ -353,6 +643,7 @@
   </div>
 
   <script>
+    // Password gate for The Prompts
     function gatePrompts(e) {
       e.preventDefault();
       var pw = prompt('Enter the password:');
@@ -360,10 +651,66 @@
       if (pw.trim().toLowerCase() === 'north') {
         window.open('https://github.com/seangoesnorth-png/goesnorth-prompts', '_blank', 'noopener');
       } else {
-        alert('Wrong password. DM "NORTH" on Instagram to get access.');
+        alert('Wrong password. DM NORTH on Instagram to get access.');
       }
       return false;
     }
+
+    // Cursor reticle
+    (function () {
+      var reticle = document.getElementById('reticle');
+      var dot = document.getElementById('cursorDot');
+      var rX = 0, rY = 0, mX = 0, mY = 0;
+      var hasMoved = false;
+
+      document.addEventListener('mousemove', function (e) {
+        mX = e.clientX;
+        mY = e.clientY;
+        if (!hasMoved) {
+          hasMoved = true;
+          reticle.classList.add('active');
+          dot.classList.add('active');
+        }
+      });
+
+      document.addEventListener('mouseleave', function () {
+        reticle.classList.remove('active');
+        dot.classList.remove('active');
+      });
+
+      function tick() {
+        rX += (mX - rX) * 0.18;
+        rY += (mY - rY) * 0.18;
+        reticle.style.transform = 'translate(' + rX + 'px, ' + rY + 'px) translate(-50%, -50%)';
+        dot.style.transform = 'translate(' + mX + 'px, ' + mY + 'px) translate(-50%, -50%)';
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    // Ticker — rotating affirmations
+    (function () {
+      var quotes = [
+        { q: 'Assume the feeling of the wish fulfilled.', a: 'Neville Goddard' },
+        { q: 'You become what you think about most of the time.', a: 'Bob Proctor' },
+        { q: 'It is the mind that builds the body.', a: 'Dorian Yates' },
+        { q: 'Who looks outside, dreams; who looks inside, awakes.', a: 'C.G. Jung' }
+      ];
+      var i = 0;
+      var ticker = document.getElementById('ticker');
+      var qEl = document.getElementById('tickerQuote');
+      var aEl = document.getElementById('tickerAttr');
+
+      setInterval(function () {
+        ticker.classList.add('fading');
+        setTimeout(function () {
+          i = (i + 1) % quotes.length;
+          qEl.textContent = quotes[i].q;
+          aEl.textContent = quotes[i].a;
+          ticker.classList.remove('fading');
+        }, 600);
+      }, 6500);
+    })();
   </script>
 
 </body>
