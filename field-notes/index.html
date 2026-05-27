@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Notes — Sean Goes North</title>
+  <meta name="description" content="Phone wallpapers from the rebuild. Free.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics 4 — placeholder ID, swap when GA4 property is created -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', {
+      page_title: 'Sean Goes North — Field Notes',
+      page_location: window.location.href
+    });
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0E12;
+      --surface: #141A20;
+      --border: #1F2832;
+      --text-primary: #E8EEF2;
+      --text-secondary: #8A95A0;
+      --text-mono: #5A6772;
+      --accent-yellow: #F5D547;
+      --accent-red: #E04545;
+      --accent-cyan: #4FB8D9;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; width: 100%; max-width: 1080px; padding: 0 24px; }
+
+    .meta-bar {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 20px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .meta-bar .home-link {
+      color: var(--text-mono);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .meta-bar .home-link:hover { color: var(--accent-yellow); }
+
+    .meta-bar .active { color: var(--accent-cyan); }
+
+    .meta-bar .active::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero { text-align: center; padding: 56px 0 24px; }
+
+    .hero .fig {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 56px;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--accent-yellow);
+      margin-bottom: 28px;
+    }
+
+    .hero .intro {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .asterisk {
+      display: inline-block;
+      color: var(--accent-red);
+      font-size: 14px;
+      margin: 24px 0 0;
+    }
+
+    .grid-section { padding: 48px 0 24px; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .wall-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+      .wall-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .wall-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .wall-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 24px 20px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+      position: relative;
+    }
+
+    .wall-card:hover { border-color: var(--accent-yellow); transform: translateY(-2px); }
+
+    .wall-card.pending { cursor: default; opacity: 0.55; }
+    .wall-card.pending:hover { border-color: var(--border); transform: none; }
+
+    /* iPhone frame mockup */
+    .phone-frame {
+      width: 180px;
+      aspect-ratio: 1290 / 2796;
+      margin: 0 auto 16px;
+      background: #1F2832;
+      border-radius: 28px;
+      padding: 6px;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .phone-screen .placeholder {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--text-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    /* Notch */
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 16px;
+      background: #0a0d14;
+      border-radius: 12px;
+      z-index: 2;
+    }
+
+    .wall-card .caption {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      margin-bottom: 4px;
+    }
+
+    .wall-card .title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--text-primary);
+    }
+
+    .wall-card .title em {
+      font-style: italic;
+      color: var(--accent-yellow);
+    }
+
+    .wall-card .badge {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      border: 1px solid var(--accent-cyan);
+      padding: 2px 6px;
+      border-radius: 1px;
+      opacity: 0.7;
+    }
+
+    /* CTA band */
+    .cta-band {
+      margin-top: 64px;
+      padding: 48px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-band::before {
+      content: '// CAPTURE';
+      position: absolute;
+      top: -7px;
+      left: 16px;
+      background: var(--bg);
+      padding: 0 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+    }
+
+    .cta-band h3 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: 36px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .cta-band .lead {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 28px;
+      line-height: 1.4;
+    }
+
+    /* Email form */
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 520px) {
+      .email-form { flex-direction: row; }
+    }
+
+    .email-form input[type=email] {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 14px 16px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      transition: border-color 0.15s ease;
+    }
+
+    .email-form input[type=email]:focus {
+      outline: none;
+      border-color: var(--accent-yellow);
+    }
+
+    .email-form button {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      border: none;
+      border-radius: 2px;
+      padding: 14px 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .email-form button:hover { opacity: 0.85; }
+
+    .form-footer {
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+    }
+
+    .form-pending-note {
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      opacity: 0.7;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 18, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 40px;
+      cursor: pointer;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-content {
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      cursor: default;
+    }
+
+    .lightbox .lb-phone {
+      width: 100%;
+      aspect-ratio: 1290 / 2796;
+      background: #1F2832;
+      border-radius: 36px;
+      padding: 8px;
+      position: relative;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.7);
+      margin-bottom: 24px;
+    }
+
+    .lightbox .lb-phone::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 22px;
+      background: #0a0d14;
+      border-radius: 14px;
+      z-index: 2;
+    }
+
+    .lightbox .lb-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    .lightbox .lb-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lightbox .lb-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .lightbox .lb-actions a {
+      background: var(--accent-yellow);
+      color: var(--bg);
+      border: none;
+      border-radius: 2px;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .lightbox .lb-actions .secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    /* Footer */
+    .footer {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      padding: 48px 0 32px;
+    }
+
+    .footer .accent { color: var(--accent-yellow); }
+
+    /* Corner crosshair decorations */
+    .crosshair {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .crosshair::before, .crosshair::after {
+      content: '';
+      position: absolute;
+      background: var(--border);
+    }
+
+    .crosshair::before { width: 1px; height: 100%; left: 50%; }
+    .crosshair::after { height: 1px; width: 100%; top: 50%; }
+
+    .crosshair.tl { top: 24px; left: 24px; }
+    .crosshair.tr { top: 24px; right: 24px; }
+    .crosshair.bl { bottom: 24px; left: 24px; }
+    .crosshair.br { bottom: 24px; right: 24px; }
+
+    /* Cursor reticle */
+    .cursor-reticle, .cursor-dot {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%); transition: opacity 0.2s ease; opacity: 0;
+    }
+    .cursor-reticle { width: 28px; height: 28px; }
+    .cursor-dot { width: 4px; height: 4px; background: var(--accent-yellow); border-radius: 50%; }
+    .cursor-reticle.active, .cursor-dot.active { opacity: 1; }
+    .cursor-reticle::before, .cursor-reticle::after { content: ''; position: absolute; background: var(--accent-cyan); }
+    .cursor-reticle::before { width: 1px; height: 28px; left: 50%; transform: translateX(-50%); }
+    .cursor-reticle::after { height: 1px; width: 28px; top: 50%; transform: translateY(-50%); }
+
+    @media (hover: none), (max-width: 520px) {
+      body { cursor: auto; }
+      .cursor-reticle, .cursor-dot { display: none; }
+      .hero h1 { font-size: 40px; }
+      .crosshair { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="crosshair tl"></div>
+  <div class="crosshair tr"></div>
+  <div class="crosshair bl"></div>
+  <div class="crosshair br"></div>
+
+  <div class="cursor-reticle" id="reticle"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <div class="page">
+
+    <div class="meta-bar">
+      <a href="/" class="home-link">&larr; seangoesnorth</a>
+      <span><span class="active">Field Notes</span> &middot; Sean Sullivan</span>
+    </div>
+
+    <div class="hero">
+      <div class="fig">// SEANGOESNORTH / FIELD NOTES</div>
+      <h1>Field <em>Notes</em></h1>
+      <h2>Phone wallpapers from the rebuild. Free.</h2>
+      <p class="intro">Every few weeks I publish a Field Note — recovery, fitness, AI, craft. Each one comes with a wallpaper. Save them. Read them when you forget which direction you're facing.</p>
+      <div class="asterisk">&#x2731;</div>
+    </div>
+
+    <div class="grid-section">
+      <div class="section-label">// FIG III / The Practice &middot; Wallpaper Pack</div>
+
+      <div class="wall-grid">
+
+        <!-- Card 1 — GAZE (pending asset) -->
+        <div class="wall-card pending" data-pending="true">
+          <span class="badge">Coming</span>
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="placeholder">SGN_GAZE<br>1290 &times; 2796<br>Pending upload</div>
+            </div>
+          </div>
+          <div class="caption">FIG III &middot; 01</div>
+          <div class="title"><em>Gaze</em></div>
+        </div>
+
+        <!-- Card 2 — LILY (pending asset) -->
+        <div class="wall-card pending" data-pending="true">
+          <span class="badge">Coming</span>
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="placeholder">SGN_LILY<br>1290 &times; 2796<br>Pending upload</div>
+            </div>
+          </div>
+          <div class="caption">FIG III &middot; 02</div>
+          <div class="title"><em>Lily</em></div>
+        </div>
+
+        <!-- Card 3 — STAIRCASE (live) -->
+        <div class="wall-card" data-wallpaper="staircase" data-title="Staircase" data-src="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.png" data-filename="SGN_STAIRCASE_wallpaper_iPhone.png" onclick="openLightbox(this)">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <img src="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.png" alt="Escher illuminated brick staircase wallpaper" loading="lazy">
+            </div>
+          </div>
+          <div class="caption">FIG III &middot; 03</div>
+          <div class="title"><em>Staircase</em></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <h3>Get the <em style="font-style:italic;color:var(--accent-yellow);">pack</em>.</h3>
+      <p class="lead">Drop your email. I'll send all current wallpapers + new ones as they ship.</p>
+
+      <!-- Email capture form. NOTE: action attribute placeholder — Sean wires Kit/MailerLite embed snippet -->
+      <form class="email-form" action="#" method="POST" onsubmit="onFormSubmit(event)">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Send Me The Pack</button>
+      </form>
+
+      <div class="form-footer">I send maybe 2 emails a month. Unsubscribe whenever.</div>
+      <div class="form-pending-note">// FORM BACKEND PENDING — Sean to wire Kit / MailerLite embed</div>
+    </div>
+
+    <div class="footer">
+      <span class="accent">// FIG III / THE PRACTICE</span> &middot; drops June 1 &middot; @SEANGOESNORTH
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <div class="lb-phone">
+        <div class="lb-screen">
+          <img src="" alt="" id="lbImage">
+        </div>
+      </div>
+      <div class="lb-actions">
+        <a id="lbDownload" href="" download>Download</a>
+        <a class="secondary" href="#" onclick="closeLightbox(event); return false;">Close</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cursor reticle
+    (function () {
+      var reticle = document.getElementById('reticle');
+      var dot = document.getElementById('cursorDot');
+      var rX = 0, rY = 0, mX = 0, mY = 0;
+      var hasMoved = false;
+      document.addEventListener('mousemove', function (e) {
+        mX = e.clientX; mY = e.clientY;
+        if (!hasMoved) { hasMoved = true; reticle.classList.add('active'); dot.classList.add('active'); }
+      });
+      document.addEventListener('mouseleave', function () { reticle.classList.remove('active'); dot.classList.remove('active'); });
+      function tick() {
+        rX += (mX - rX) * 0.18; rY += (mY - rY) * 0.18;
+        reticle.style.transform = 'translate(' + rX + 'px, ' + rY + 'px) translate(-50%, -50%)';
+        dot.style.transform = 'translate(' + mX + 'px, ' + mY + 'px) translate(-50%, -50%)';
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    // Lightbox
+    function openLightbox(card) {
+      if (card.dataset.pending) return;
+      var src = card.dataset.src;
+      var filename = card.dataset.filename;
+      var title = card.dataset.title;
+      document.getElementById('lbImage').src = src;
+      document.getElementById('lbImage').alt = title + ' wallpaper';
+      document.getElementById('lbDownload').href = src;
+      document.getElementById('lbDownload').setAttribute('download', filename);
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (e && e.target.id !== 'lightbox' && !e.target.classList.contains('secondary')) return;
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Form (placeholder behavior until Sean wires Kit/MailerLite)
+    function onFormSubmit(e) {
+      e.preventDefault();
+      alert('Email capture pending platform setup. For now: DM seangoesnorth on Instagram and I\'ll send the wallpapers manually.');
+      return false;
+    }
+  </script>
+
+</body>
+</html>

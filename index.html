@@ -193,6 +193,26 @@
     .ticker.fading .ticker-quote,
     .ticker.fading .ticker-attr { opacity: 0; }
 
+    /* Soft sub-hero callout — Field Notes */
+    .sub-callout {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mono);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .sub-callout a {
+      color: var(--accent-yellow);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+
+    .sub-callout a:hover { border-bottom-color: var(--accent-yellow); }
+
     /* Links section */
     .links {
       padding: 16px 0 32px;
@@ -492,6 +512,7 @@
       <p class="thesis">I use AI to rebuild every part of my life — in public.</p>
       <div class="asterisk">&#x2731;</div>
       <div class="coords">Coord 41.0339&deg;N 73.7629&deg;W</div>
+      <div class="sub-callout">// New &middot; free phone wallpapers &middot; <a href="/field-notes/">field-notes &rarr;</a></div>
     </div>
 
     <div class="ticker" id="ticker">
@@ -537,6 +558,21 @@
         <div class="body">
           <div class="label">Morning Practice</div>
           <div class="sublabel">Substack &middot; weekly</div>
+        </div>
+        <span class="arrow">&rarr;</span>
+      </a>
+
+      <a href="/field-notes/" class="link-card">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="3" width="14" height="18" rx="1" stroke="#8A95A0" stroke-width="1.4"/>
+            <path d="M8 7 L16 7 M8 11 L16 11 M8 15 L13 15" stroke="#8A95A0" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="18" cy="6" r="1.4" fill="#F5D547"/>
+          </svg>
+        </span>
+        <div class="body">
+          <div class="label">Field Notes</div>
+          <div class="sublabel">Free phone wallpapers &middot; new every FIG</div>
         </div>
         <span class="arrow">&rarr;</span>
       </a>
