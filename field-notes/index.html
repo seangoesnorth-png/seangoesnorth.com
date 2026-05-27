@@ -379,6 +379,9 @@
       color: var(--text-mono);
     }
 
+    /* Hide Kit's auto-injected duplicate form at body root (we use our own form with matching classes for Kit JS to AJAX-attach) */
+    body > form.formkit-form { display: none !important; }
+
     /* Confirmed state (after Kit double opt-in completes) */
     .form-confirmed { margin-top: 12px; }
     .form-confirmed .lead {
