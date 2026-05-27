@@ -379,15 +379,32 @@
       color: var(--text-mono);
     }
 
-    .form-pending-note {
-      margin-top: 8px;
+    /* Confirmed state (after Kit double opt-in completes) */
+    .form-confirmed { margin-top: 12px; }
+    .form-confirmed .lead {
       font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.10em;
+      font-size: 12px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent-cyan);
-      opacity: 0.7;
+      margin-bottom: 8px;
     }
+    .form-confirmed p {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Inline error / status pinned under form (Kit injects success/error divs) */
+    .formkit-alert {
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      color: var(--text-secondary);
+    }
+    .formkit-alert-success { color: var(--accent-yellow); }
+    .formkit-alert-error { color: var(--accent-red); }
 
     /* Lightbox */
     .lightbox {
@@ -602,14 +619,25 @@
       <h3>Get the <em style="font-style:italic;color:var(--accent-yellow);">pack</em>.</h3>
       <p class="lead">Drop your email. I'll send all current wallpapers + new ones as they ship.</p>
 
-      <!-- Email capture form. NOTE: action attribute placeholder — Sean wires Kit/MailerLite embed snippet -->
-      <form class="email-form" action="#" method="POST" onsubmit="onFormSubmit(event)">
-        <input type="email" name="email" placeholder="your@email.com" required>
-        <button type="submit">Send Me The Pack</button>
+      <!-- Email capture form — Kit (formerly ConvertKit). Form UID 3cbe699cc6. Posts to SGN Field Notes list. -->
+      <form class="email-form seva-form formkit-form"
+            action="https://app.kit.com/forms/9493285/subscriptions"
+            method="post"
+            data-sv-form="9493285"
+            data-uid="3cbe699cc6"
+            data-format="inline"
+            data-version="5">
+        <input type="email" name="email_address" placeholder="your@email.com" required>
+        <button type="submit" data-element="submit">Send me the pack</button>
       </form>
 
       <div class="form-footer">I send maybe 2 emails a month. Unsubscribe whenever.</div>
-      <div class="form-pending-note">// FORM BACKEND PENDING — Sean to wire Kit / MailerLite embed</div>
+
+      <!-- Thank-you state shown when user lands back from confirmation email (?confirmed=1) -->
+      <div class="form-confirmed" id="formConfirmed" style="display:none;">
+        <p class="lead" style="color:var(--accent-yellow);">// confirmed.</p>
+        <p>Welcome in. Three wallpapers are in your inbox. New ones every FIG chapter.</p>
+      </div>
     </div>
 
     <div class="footer">
@@ -673,13 +701,26 @@
       document.body.style.overflow = '';
     }
 
-    // Form (placeholder behavior until Sean wires Kit/MailerLite)
-    function onFormSubmit(e) {
-      e.preventDefault();
-      alert('Email capture pending platform setup. For now: DM seangoesnorth on Instagram and I\'ll send the wallpapers manually.');
-      return false;
-    }
+    // Show confirmation state when user lands back from Kit confirmation email
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('confirmed') === '1') {
+        var form = document.querySelector('.email-form');
+        var footer = document.querySelector('.form-footer');
+        var confirmed = document.getElementById('formConfirmed');
+        if (form) form.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+        if (confirmed) confirmed.style.display = 'block';
+        // Track confirmation in GA4
+        if (typeof gtag === 'function') {
+          gtag('event', 'sign_up', { method: 'kit_field_notes' });
+        }
+      }
+    })();
   </script>
+
+  <!-- Kit form behavior (subscriber tracking + analytics). Form posts work without this, but Kit's JS enables success states. -->
+  <script async data-uid="3cbe699cc6" src="https://sean-goes-north.kit.com/3cbe699cc6/index.js"></script>
 
 </body>
 </html>
