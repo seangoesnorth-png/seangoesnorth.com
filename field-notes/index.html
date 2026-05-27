@@ -608,7 +608,10 @@
         <div class="wall-card" data-wallpaper="staircase" data-title="Staircase" data-src="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.png" data-filename="SGN_STAIRCASE_wallpaper_iPhone.png" onclick="openLightbox(this)">
           <div class="phone-frame">
             <div class="phone-screen">
-              <img src="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.png" alt="Escher illuminated brick staircase wallpaper" loading="lazy">
+              <picture>
+                <source srcset="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.webp" type="image/webp">
+                <img src="/assets/wallpapers/SGN_STAIRCASE_wallpaper_iPhone.png" alt="Escher illuminated brick staircase wallpaper" loading="lazy">
+              </picture>
             </div>
           </div>
           <div class="caption">FIG III &middot; 03</div>
@@ -704,6 +707,54 @@
       document.body.style.overflow = '';
     }
 
+    // UTM source capture — store traffic source from ?src= or ?utm_source= so we can attribute Kit signups in GA4
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var src = params.get('src') || params.get('utm_source');
+      if (src) {
+        sessionStorage.setItem('sgn_src', src);
+        if (typeof gtag === 'function') {
+          gtag('event', 'page_view_attributed', { source: src });
+        }
+      }
+    })();
+
+    // GA4 event — wallpaper preview opened (extends openLightbox via wrap)
+    (function () {
+      var orig = window.openLightbox;
+      window.openLightbox = function (card) {
+        var name = card.getAttribute('data-wallpaper');
+        if (typeof gtag === 'function') {
+          gtag('event', 'wallpaper_preview', { wallpaper: name });
+        }
+        return orig.apply(this, arguments);
+      };
+    })();
+
+    // GA4 event — wallpaper download (Download button click in lightbox)
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.id === 'lbDownload' && typeof gtag === 'function') {
+        var name = (document.getElementById('lbImage') || {}).alt || 'unknown';
+        gtag('event', 'wallpaper_download', { wallpaper: name });
+      }
+    });
+
+    // GA4 event — form submit attempt (fires before Kit's AJAX handles the post)
+    (function () {
+      var form = document.querySelector('.email-form');
+      if (!form) return;
+      form.addEventListener('submit', function () {
+        if (typeof gtag !== 'function') return;
+        var src = sessionStorage.getItem('sgn_src') || 'direct';
+        gtag('event', 'generate_lead', {
+          source: src,
+          form: 'field_notes',
+          method: 'kit'
+        });
+      });
+    })();
+
     // Show confirmation state when user lands back from Kit confirmation email
     (function () {
       var params = new URLSearchParams(window.location.search);
@@ -714,9 +765,10 @@
         if (form) form.style.display = 'none';
         if (footer) footer.style.display = 'none';
         if (confirmed) confirmed.style.display = 'block';
-        // Track confirmation in GA4
+        // Track confirmation in GA4 (carries source from earlier UTM capture if present)
         if (typeof gtag === 'function') {
-          gtag('event', 'sign_up', { method: 'kit_field_notes' });
+          var src = sessionStorage.getItem('sgn_src') || 'direct';
+          gtag('event', 'sign_up', { method: 'kit_field_notes', source: src });
         }
       }
     })();
