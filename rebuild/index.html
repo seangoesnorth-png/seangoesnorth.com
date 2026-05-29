@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Rebuild Field Notes — Sean Goes North</title>
+  <meta name="description" content="The actual stack behind the climb. Body, mind, craft. No theory.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- GA4 placeholder — swap G-XXXXXXXXXX when property exists -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { page_title: 'SGN — The Rebuild Field Notes', page_location: window.location.href });
+  </script>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root{
+      --bg:#0A0E12; --surface:#141A20; --border:#1F2832;
+      --text-primary:#E8EEF2; --text-secondary:#8A95A0; --text-mono:#5A6772;
+      --accent-yellow:#F5D547; --accent-red:#E04545; --accent-cyan:#4FB8D9;
+      --font-serif:'Instrument Serif',Georgia,serif; --font-mono:'JetBrains Mono',monospace;
+    }
+    body{ background:var(--bg); color:var(--text-primary); font-family:var(--font-serif);
+      min-height:100vh; display:flex; flex-direction:column; align-items:center;
+      position:relative; overflow-x:hidden; cursor:none; }
+    body::before{ content:''; position:fixed; inset:0;
+      background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+      background-size:32px 32px; pointer-events:none; z-index:0; }
+    .page{ position:relative; z-index:1; width:100%; max-width:680px; padding:0 24px 64px; }
+
+    .meta-bar{ font-family:var(--font-mono); font-size:10px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); text-align:center; padding:20px 0 0; }
+    .meta-bar a{ color:var(--text-mono); text-decoration:none; }
+    .meta-bar a:hover{ color:var(--accent-yellow); }
+
+    .hero{ text-align:center; padding:48px 0 12px; }
+    .hero .fig{ font-family:var(--font-mono); font-size:10px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); margin-bottom:16px; }
+    .hero h1{ font-weight:400; font-size:44px; line-height:1.05; margin-bottom:10px; }
+    .hero h1 em{ font-style:italic; color:var(--accent-yellow); }
+    .hero .thesis{ font-style:italic; font-size:19px; color:var(--text-secondary); line-height:1.4; }
+    .asterisk{ display:inline-block; color:var(--accent-red); font-size:14px; margin:22px 0 0; }
+    .coords{ font-family:var(--font-mono); font-size:9px; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--text-mono); margin-top:8px; }
+
+    .lede{ font-size:20px; line-height:1.5; color:var(--text-primary); margin:36px 0 8px; }
+    .lede .y{ color:var(--accent-yellow); font-style:italic; }
+
+    .block{ margin-top:40px; border-top:1px solid var(--border); padding-top:22px; }
+    .block .label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--accent-cyan); margin-bottom:14px; }
+    .block ul{ list-style:none; }
+    .block li{ font-size:18px; line-height:1.5; color:var(--text-primary);
+      padding:8px 0 8px 22px; position:relative; }
+    .block li::before{ content:'—'; position:absolute; left:0; color:var(--text-mono); }
+    .block li .note{ color:var(--text-secondary); font-style:italic; }
+
+    .rule-line{ margin-top:40px; padding:24px; border:1px solid var(--border);
+      border-radius:2px; text-align:center; background:rgba(245,213,71,.03); }
+    .rule-line p{ font-size:21px; line-height:1.4; }
+    .rule-line .y{ color:var(--accent-yellow); }
+
+    /* CTA / Kit capture */
+    .cta-band{ margin-top:48px; text-align:center; }
+    .cta-band h3{ font-size:30px; margin-bottom:8px; }
+    .cta-band h3 em{ font-style:italic; color:var(--accent-yellow); }
+    .cta-band .lead{ font-size:16px; color:var(--text-secondary); margin-bottom:22px; }
+    .email-form{ display:flex; flex-direction:column; gap:12px; max-width:460px; margin:0 auto; }
+    @media(min-width:520px){ .email-form{ flex-direction:row; } }
+    .email-form input[type=email]{ flex:1; background:var(--bg); border:1px solid var(--border);
+      color:var(--text-primary); font-family:var(--font-mono); font-size:14px;
+      padding:14px 16px; border-radius:2px; transition:border-color .15s ease; }
+    .email-form input[type=email]:focus{ outline:none; border-color:var(--accent-yellow); }
+    .email-form button{ background:var(--accent-yellow); color:var(--bg); border:none;
+      font-family:var(--font-mono); font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+      font-weight:500; padding:14px 22px; border-radius:2px; cursor:pointer; transition:opacity .15s ease; }
+    .email-form button:hover{ opacity:.85; }
+    .form-footer{ margin-top:14px; font-family:var(--font-mono); font-size:9px;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--text-mono); }
+    body > form.formkit-form{ display:none !important; }
+    .form-confirmed{ margin-top:14px; display:none; }
+    .form-confirmed .lead{ font-family:var(--font-mono); font-size:12px; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--accent-yellow); margin-bottom:8px; }
+    .form-confirmed p{ font-size:18px; color:var(--text-secondary); line-height:1.5; }
+
+    .footer{ font-family:var(--font-mono); font-size:9px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); text-align:center; padding:48px 0 0; }
+    .footer a{ color:var(--accent-yellow); text-decoration:none; }
+
+    .crosshair{ position:fixed; width:20px; height:20px; pointer-events:none; z-index:0; }
+    .crosshair::before,.crosshair::after{ content:''; position:absolute; background:var(--border); }
+    .crosshair::before{ width:1px; height:100%; left:50%; }
+    .crosshair::after{ height:1px; width:100%; top:50%; }
+    .crosshair.tl{ top:24px; left:24px; } .crosshair.tr{ top:24px; right:24px; }
+    .crosshair.bl{ bottom:24px; left:24px; } .crosshair.br{ bottom:24px; right:24px; }
+
+    .cursor-reticle{ position:fixed; top:0; left:0; width:28px; height:28px; pointer-events:none;
+      z-index:9999; transform:translate(-50%,-50%); transition:opacity .2s ease; opacity:0; }
+    .cursor-reticle.active{ opacity:1; }
+    .cursor-reticle::before,.cursor-reticle::after{ content:''; position:absolute; background:var(--accent-cyan); }
+    .cursor-reticle::before{ width:1px; height:28px; left:50%; transform:translateX(-50%); }
+    .cursor-reticle::after{ height:1px; width:28px; top:50%; transform:translateY(-50%); }
+    .cursor-dot{ position:fixed; top:0; left:0; width:4px; height:4px; background:var(--accent-yellow);
+      border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:opacity .2s ease; opacity:0; }
+    .cursor-dot.active{ opacity:1; }
+    @media(hover:none),(max-width:520px){ body{cursor:auto;} .cursor-reticle,.cursor-dot{display:none;} .crosshair{display:none;} .hero h1{font-size:36px;} }
+  </style>
+</head>
+<body>
+  <div class="crosshair tl"></div><div class="crosshair tr"></div>
+  <div class="crosshair bl"></div><div class="crosshair br"></div>
+  <div class="cursor-reticle" id="reticle"></div><div class="cursor-dot" id="cursorDot"></div>
+
+  <div class="page">
+    <div class="meta-bar"><a href="/">&larr; seangoesnorth</a> &middot; // THE REBUILD</div>
+
+    <div class="hero">
+      <div class="fig">// FIG · FIELD NOTE · THE REBUILD</div>
+      <h1>The Rebuild <em>Field Notes</em></h1>
+      <p class="thesis">The actual stack behind the climb. No theory — what I do.</p>
+      <div class="asterisk">&#x2731;</div>
+      <div class="coords">Body &middot; Mind &middot; Craft</div>
+    </div>
+
+    <p class="lede">Two years, nine months sober. Living at home. HVAC by day, building everything back by night. I don't post the after — there is no after. This is the middle, and these are the reps that <span class="y">count even on the days that don't look like progress.</span></p>
+
+    <div class="block">
+      <div class="label">// Body</div>
+      <ul>
+        <li>5am. Before the day can argue with me.</li>
+        <li>Lift heavy, 4&ndash;5x a week. NASM cert in progress.</li>
+        <li>Protein first. Sleep like it's the job — because it is.</li>
+        <li>The body is the proof the mind can change. <span class="note">Start there when nothing else moves.</span></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="label">// Mind</div>
+      <ul>
+        <li>The morning prompt before the phone. One page: what am I glancing at, what am I gazing at, what's the one thing I move toward today.</li>
+        <li>The walk. Two miles, no destination. I record while I think out loud.</li>
+        <li>Read a paragraph out loud, not silent. It lands different.</li>
+        <li>Gaze, not glance. <span class="note">Same eyes, different aim.</span></li>
+        <li>Confess one thing daily I'd usually narrate around.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="label">// Craft</div>
+      <ul>
+        <li>Ship something every day, even when it's ugly. Especially when it's ugly.</li>
+        <li>Build in public &mdash; the middle, not the highlight reel.</li>
+        <li>AI is the leverage. I make in hours what used to take a team.</li>
+        <li>Twenty years making other people famous. <span class="note">Now I make for the one brand I can't quit.</span></li>
+      </ul>
+    </div>
+
+    <div class="rule-line">
+      <p>Measured against no one.<br>Built day by day.<br><span class="y">Only up from here.</span></p>
+    </div>
+
+    <div class="cta-band">
+      <h3>Get the next <em>field note</em>.</h3>
+      <p class="lead">New one every few weeks. The reps, the wins, the days that don't look like progress.</p>
+      <form class="email-form seva-form formkit-form"
+            action="https://app.kit.com/forms/9493285/subscriptions"
+            method="post" data-sv-form="9493285" data-uid="3cbe699cc6" data-format="inline" data-version="5">
+        <input type="email" name="email_address" placeholder="your@email.com" required>
+        <button type="submit" data-element="submit">Send me the field notes</button>
+      </form>
+      <div class="form-footer">Maybe 2 emails a month. Unsubscribe whenever.</div>
+      <div class="form-confirmed" id="formConfirmed">
+        <p class="lead">// you're in.</p>
+        <p>The field notes are in your inbox. New ones land with every chapter.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      // THE REBUILD &middot; MIND &times; CRAFT &middot; <a href="/field-notes/">free wallpapers &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    // Cursor reticle
+    (function(){
+      var reticle=document.getElementById('reticle'),dot=document.getElementById('cursorDot');
+      var rX=0,rY=0,mX=0,mY=0,moved=false;
+      document.addEventListener('mousemove',function(e){ mX=e.clientX;mY=e.clientY;
+        if(!moved){moved=true;reticle.classList.add('active');dot.classList.add('active');}});
+      document.addEventListener('mouseleave',function(){reticle.classList.remove('active');dot.classList.remove('active');});
+      function tick(){ rX+=(mX-rX)*.18; rY+=(mY-rY)*.18;
+        reticle.style.transform='translate('+rX+'px,'+rY+'px) translate(-50%,-50%)';
+        dot.style.transform='translate('+mX+'px,'+mY+'px) translate(-50%,-50%)';
+        requestAnimationFrame(tick);} tick();
+    })();
+    // ?confirmed=1 state
+    (function(){
+      var p=new URLSearchParams(location.search);
+      if(p.get('confirmed')==='1'){
+        var fm=document.querySelector('.email-form'), ft=document.querySelector('.form-footer'), c=document.getElementById('formConfirmed');
+        if(fm)fm.style.display='none'; if(ft)ft.style.display='none'; if(c)c.style.display='block';
+        if(typeof gtag==='function') gtag('event','sign_up',{method:'kit_rebuild_field_notes'});
+      }
+    })();
+  </script>
+  <!-- Kit form behavior -->
+  <script async data-uid="3cbe699cc6" src="https://sean-goes-north.kit.com/3cbe699cc6/index.js"></script>
+</body>
+</html>
