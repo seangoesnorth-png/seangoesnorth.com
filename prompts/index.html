@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 3 Prompts — Sean Goes North</title>
+  <meta name="description" content="The 3 prompts I run to rebuild body, mind, craft — using the C.R.I.T method. Steal them.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- GA4 placeholder — swap G-XXXXXXXXXX when property exists -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { page_title: 'SGN — The 3 Prompts', page_location: window.location.href });
+  </script>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root{
+      --bg:#0A0E12; --surface:#141A20; --border:#1F2832;
+      --text-primary:#E8EEF2; --text-secondary:#8A95A0; --text-mono:#5A6772;
+      --accent-yellow:#F5D547; --accent-red:#E04545; --accent-cyan:#4FB8D9;
+      --body:#F5D547; --mind:#A98BE0; --craft:#E55A2B;
+      --font-serif:'Instrument Serif',Georgia,serif; --font-mono:'JetBrains Mono',monospace;
+    }
+    body{ background:var(--bg); color:var(--text-primary); font-family:var(--font-serif);
+      min-height:100vh; display:flex; flex-direction:column; align-items:center;
+      position:relative; overflow-x:hidden; cursor:none; }
+    body::before{ content:''; position:fixed; inset:0;
+      background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+      background-size:32px 32px; pointer-events:none; z-index:0; }
+    .page{ position:relative; z-index:1; width:100%; max-width:680px; padding:0 24px 64px; }
+
+    .meta-bar{ font-family:var(--font-mono); font-size:10px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); text-align:center; padding:20px 0 0; }
+    .meta-bar a{ color:var(--text-mono); text-decoration:none; }
+    .meta-bar a:hover{ color:var(--accent-yellow); }
+
+    .hero{ text-align:center; padding:48px 0 12px; }
+    .hero .fig{ font-family:var(--font-mono); font-size:10px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); margin-bottom:16px; }
+    .hero h1{ font-weight:400; font-size:44px; line-height:1.05; margin-bottom:10px; }
+    .hero h1 em{ font-style:italic; color:var(--accent-yellow); }
+    .hero .thesis{ font-style:italic; font-size:19px; color:var(--text-secondary); line-height:1.4; }
+    .asterisk{ display:inline-block; color:var(--accent-red); font-size:14px; margin:22px 0 0; }
+    .coords{ font-family:var(--font-mono); font-size:9px; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--text-mono); margin-top:8px; }
+
+    .lede{ font-size:20px; line-height:1.5; color:var(--text-primary); margin:36px 0 8px; }
+    .lede .y{ color:var(--accent-yellow); font-style:italic; }
+
+    /* C.R.I.T legend */
+    .crit{ margin-top:30px; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .crit div{ font-family:var(--font-mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--text-mono); text-align:center; border:1px solid var(--border); padding:10px 4px; border-radius:2px; }
+    .crit div b{ display:block; color:var(--accent-cyan); font-size:13px; margin-bottom:4px; font-weight:500; }
+
+    /* Prompt dropdowns */
+    .prompts{ margin-top:40px; display:flex; flex-direction:column; gap:14px; }
+    details.prompt{ border:1px solid var(--border); border-left:3px solid var(--pc); border-radius:2px;
+      background:var(--surface); overflow:hidden; }
+    details.prompt[data-pillar=body]{ --pc:var(--body); }
+    details.prompt[data-pillar=mind]{ --pc:var(--mind); }
+    details.prompt[data-pillar=craft]{ --pc:var(--craft); }
+    details.prompt summary{ list-style:none; cursor:none; padding:20px 22px; display:flex;
+      align-items:center; gap:14px; user-select:none; }
+    details.prompt summary::-webkit-details-marker{ display:none; }
+    .ptag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+      color:var(--pc); min-width:64px; }
+    .ptitle{ font-size:22px; flex:1; }
+    .ptitle em{ font-style:italic; color:var(--text-secondary); font-size:16px; }
+    .chev{ font-family:var(--font-mono); color:var(--text-mono); transition:transform .2s ease; }
+    details.prompt[open] .chev{ transform:rotate(180deg); }
+    .prompt-body{ padding:0 22px 22px; }
+    .prompt-body pre{ font-family:var(--font-mono); font-size:12.5px; line-height:1.6;
+      color:var(--text-primary); background:var(--bg); border:1px solid var(--border); border-radius:2px;
+      padding:18px; white-space:pre-wrap; word-wrap:break-word; }
+    .prompt-body pre .lbl{ color:var(--pc); }
+    .copy{ margin-top:12px; background:transparent; border:1px solid var(--pc); color:var(--pc);
+      font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+      padding:10px 18px; border-radius:2px; cursor:none; transition:all .15s ease; }
+    .copy:hover{ background:var(--pc); color:var(--bg); }
+    .copy.done{ background:var(--pc); color:var(--bg); }
+
+    .rule-line{ margin-top:40px; padding:24px; border:1px solid var(--border);
+      border-radius:2px; text-align:center; background:rgba(245,213,71,.03); }
+    .rule-line p{ font-size:21px; line-height:1.4; }
+    .rule-line .y{ color:var(--accent-yellow); }
+
+    .cta-band{ margin-top:48px; text-align:center; }
+    .cta-band h3{ font-size:30px; margin-bottom:8px; }
+    .cta-band h3 em{ font-style:italic; color:var(--accent-yellow); }
+    .cta-band .lead{ font-size:16px; color:var(--text-secondary); margin-bottom:22px; }
+    .dm{ display:inline-block; font-family:var(--font-mono); font-size:13px; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--bg); background:var(--accent-yellow); text-decoration:none;
+      padding:14px 26px; border-radius:2px; transition:opacity .15s ease; }
+    .dm:hover{ opacity:.85; }
+
+    .footer{ font-family:var(--font-mono); font-size:9px; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--text-mono); text-align:center; padding:48px 0 0; }
+    .footer a{ color:var(--accent-yellow); text-decoration:none; }
+
+    .crosshair{ position:fixed; width:20px; height:20px; pointer-events:none; z-index:0; }
+    .crosshair::before,.crosshair::after{ content:''; position:absolute; background:var(--border); }
+    .crosshair::before{ width:1px; height:100%; left:50%; }
+    .crosshair::after{ height:1px; width:100%; top:50%; }
+    .crosshair.tl{ top:24px; left:24px; } .crosshair.tr{ top:24px; right:24px; }
+    .crosshair.bl{ bottom:24px; left:24px; } .crosshair.br{ bottom:24px; right:24px; }
+
+    .cursor-reticle{ position:fixed; top:0; left:0; width:28px; height:28px; pointer-events:none;
+      z-index:9999; transform:translate(-50%,-50%); transition:opacity .2s ease; opacity:0; }
+    .cursor-reticle.active{ opacity:1; }
+    .cursor-reticle::before,.cursor-reticle::after{ content:''; position:absolute; background:var(--accent-cyan); }
+    .cursor-reticle::before{ width:1px; height:28px; left:50%; transform:translateX(-50%); }
+    .cursor-reticle::after{ height:1px; width:28px; top:50%; transform:translateY(-50%); }
+    .cursor-dot{ position:fixed; top:0; left:0; width:4px; height:4px; background:var(--accent-yellow);
+      border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:opacity .2s ease; opacity:0; }
+    .cursor-dot.active{ opacity:1; }
+    @media(hover:none),(max-width:520px){ body{cursor:auto;} .cursor-reticle,.cursor-dot{display:none;}
+      .crosshair{display:none;} .hero h1{font-size:36px;} summary,.copy{cursor:pointer;}
+      .crit{grid-template-columns:repeat(2,1fr);} }
+  </style>
+</head>
+<body>
+  <div class="crosshair tl"></div><div class="crosshair tr"></div>
+  <div class="crosshair bl"></div><div class="crosshair br"></div>
+  <div class="cursor-reticle" id="reticle"></div><div class="cursor-dot" id="cursorDot"></div>
+
+  <div class="page">
+    <div class="meta-bar"><a href="/">&larr; seangoesnorth</a> &middot; // THE 3 PROMPTS</div>
+
+    <div class="hero">
+      <div class="fig">// FIELD NOTE · THE PROMPTS</div>
+      <h1>The 3 <em>Prompts</em></h1>
+      <p class="thesis">The ones I actually run to rebuild &mdash; body, mind, craft.</p>
+      <div class="asterisk">&#x2731;</div>
+      <div class="coords">Built on the C.R.I.T method</div>
+    </div>
+
+    <p class="lede">Most prompts fail because they answer before they ask. These don't. Each one qualifies you first &mdash; <span class="y">one question at a time</span> &mdash; then builds around your real answers.</p>
+
+    <div class="crit">
+      <div><b>C</b>ontext</div><div><b>R</b>oadblocks</div><div><b>I</b>ntent</div><div><b>T</b>imeline</div>
+    </div>
+
+    <div class="prompts">
+      <details class="prompt" data-pillar="body" open>
+        <summary><span class="ptag">// Body</span><span class="ptitle">a sustainable routine <em>&mdash; not an extreme one</em></span><span class="chev">&#9662;</span></summary>
+        <div class="prompt-body">
+          <pre id="p-body">Act as a supportive fitness coach. Before you give me anything, qualify me with the C.R.I.T method &mdash; one question at a time:
+<span class="lbl">CONTEXT</span> &mdash; my age, height, current weight, what my days actually look like
+<span class="lbl">ROADBLOCKS</span> &mdash; any injuries or medical conditions, and what's tripped me up before
+<span class="lbl">INTENT</span> &mdash; how I want to look, feel, and move
+<span class="lbl">TIMELINE</span> &mdash; my honest deadline and days/week I can commit
+Then build a simple daily routine &mdash; movement, food, sleep &mdash; that prioritizes consistency over extremes and fits MY answers. Flag anything I should run by a doctor or registered dietitian first.</pre>
+          <button class="copy" data-target="p-body">Copy prompt</button>
+        </div>
+      </details>
+
+      <details class="prompt" data-pillar="mind">
+        <summary><span class="ptag">// Mind</span><span class="ptitle">a grounded check-in <em>&mdash; not a therapist</em></span><span class="chev">&#9662;</span></summary>
+        <div class="prompt-body">
+          <pre id="p-mind">Act as a grounded thinking partner &mdash; not a therapist. Qualify me with the C.R.I.T method first, one question at a time:
+<span class="lbl">CONTEXT</span> &mdash; how I'm actually doing today, what my mornings look like
+<span class="lbl">ROADBLOCKS</span> &mdash; what I keep avoiding or what pulls me off track
+<span class="lbl">INTENT</span> &mdash; the kind of person I'm trying to become
+<span class="lbl">TIMELINE</span> &mdash; what a good 'today' looks like
+Then give me a short daily morning check-in that keeps me honest without beating me up. If something heavier comes up, point me to a real person I trust or a professional &mdash; you're a tool for clarity, not a substitute for human support.</pre>
+          <button class="copy" data-target="p-mind">Copy prompt</button>
+        </div>
+      </details>
+
+      <details class="prompt" data-pillar="craft">
+        <summary><span class="ptag">// Craft</span><span class="ptitle">a 7-day plan <em>&mdash; one action a day</em></span><span class="chev">&#9662;</span></summary>
+        <div class="prompt-body">
+          <pre id="p-craft">Act as a creative director and thinking partner. Qualify me with the C.R.I.T method first, one question at a time:
+<span class="lbl">CONTEXT</span> &mdash; what I'm building or learning, my current skill level
+<span class="lbl">ROADBLOCKS</span> &mdash; what's stalled me, what I'm missing
+<span class="lbl">INTENT</span> &mdash; what 'done' actually looks like
+<span class="lbl">TIMELINE</span> &mdash; my real deadline and hours/week
+Then give me a 7-day plan with one concrete action per day &mdash; and tell me where AI can do the heavy lifting and where I have to show up myself.</pre>
+          <button class="copy" data-target="p-craft">Copy prompt</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="rule-line">
+      <p>Copy one. Paste it. Answer honest.<br><span class="y">Do the first thing it gives you. Today.</span></p>
+    </div>
+
+    <div class="cta-band">
+      <h3>Want all 3 <em>plus the field notes</em>?</h3>
+      <p class="lead">DM the word REBUILD on Instagram &mdash; I'll send the whole stack.</p>
+      <a class="dm" href="https://ig.me/m/seangoesnorth" target="_blank" rel="noopener">DM &ldquo;REBUILD&rdquo; &rarr;</a>
+    </div>
+
+    <div class="footer">
+      // THE REBUILD &middot; MIND &times; CRAFT &middot; <a href="/rebuild/">the field notes &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var reticle=document.getElementById('reticle'),dot=document.getElementById('cursorDot');
+      var rX=0,rY=0,mX=0,mY=0,moved=false;
+      document.addEventListener('mousemove',function(e){ mX=e.clientX;mY=e.clientY;
+        if(!moved){moved=true;reticle.classList.add('active');dot.classList.add('active');}});
+      document.addEventListener('mouseleave',function(){reticle.classList.remove('active');dot.classList.remove('active');});
+      function tick(){ rX+=(mX-rX)*.18; rY+=(mY-rY)*.18;
+        reticle.style.transform='translate('+rX+'px,'+rY+'px) translate(-50%,-50%)';
+        dot.style.transform='translate('+mX+'px,'+mY+'px) translate(-50%,-50%)';
+        requestAnimationFrame(tick);} tick();
+    })();
+    // copy buttons (copies clean text, no markup)
+    document.querySelectorAll('.copy').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var el=document.getElementById(btn.dataset.target);
+        var txt=el.innerText;
+        navigator.clipboard.writeText(txt).then(function(){
+          var o=btn.textContent; btn.textContent='Copied ✓'; btn.classList.add('done');
+          if(typeof gtag==='function') gtag('event','copy_prompt',{prompt:btn.dataset.target});
+          setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1600);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
